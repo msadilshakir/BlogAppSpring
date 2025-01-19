@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<div th:replace="blog/header :: header"></div>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark"  style="background-color: #0066a4 !important;">
+    <div class="container-fluid">
+
+
+        <!-- <img th:src="@{/images/logo.jpg}" alt="Logo" width="200" height="auto"> -->
+        <section><a class="navbar-brand" href="/">THALES BLOG APPLICATION</a></section>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+                <li class="nav-item ">
+                    <a class="nav-link active " aria-current="page" th:href=@{/}>All Posts</a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link active " aria-current="page" th:href=@{/admin/posts}>Admin Panel</a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link active " aria-current="page" th:href=@{/logout}>Logout</a>
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div th:each="post: ${postsResponse}">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>
+                            <a th:href="@{/post/{postUrl}(postUrl=${post.url})}" th:text="${post.title}"></a>
+                            <div>
+                                <strong th:text="${#temporals.format(post.createdOn, 'dd MMM yyyy')}"></strong>
+                            </div>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <span  th:utext="${post.shortDescription}"></span>
+                        <a th:href="@{/post/{postUrl}(postUrl=${post.url})}" >Read More</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div th:replace="blog/search :: search"></div>
+        </div>
+
+    </div>
+</div>
+
+<br/>
+<br/>
+<br/>
+
+<div th:replace="blog/footer    :: footer"></div>
+</body>
+</html>

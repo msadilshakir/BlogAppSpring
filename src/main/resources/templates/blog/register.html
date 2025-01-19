@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<div th:replace="blog/header :: header"></div>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark" th:fragment="navbar" style="background-color: #0066a4 !important;">
+    <div class="container-fluid">
+
+
+        <!-- <img th:src="@{/images/logo.jpg}" alt="Logo" width="200" height="auto"> -->
+        <section><a class="navbar-brand" href="/">THALES BLOG APPLICATION</a></section>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+                <li class="nav-item ">
+                    <a class="nav-link active " aria-current="page" th:href=@{/}>All Posts</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link active " aria-current="page" th:href=@{/register}>Registration</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link active " aria-current="page" th:href=@{/login}>Login</a>
+                </li>
+
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<br/>
+
+<br/>
+
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card" style="width: 100% !important;">
+            <div class="card-header">
+                <h2 class="text-center">Registration</h2>
+            </div>
+            <div th:if="${param.success}">
+                <div class="alert alert-info">
+                    You have registered successfully to our blog application!!
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="post"
+                      role="form"
+                      th:action="@{/register/save}"
+                      th:object="${user}">
+                    <div class="form-group mb-3">
+                        <label class="form-label" >First Name</label>
+                        <input name="firstName"
+                               class="form-control"
+                               id="firstName"
+                               placeholder="Enter First Name"
+                               type="text"
+                               th:field="*{firstName}"/>
+                        <p th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></p>
+
+                        <label class="form-label" >Last Name</label>
+                        <input name="lastName"
+                               class="form-control"
+                               id="lastName"
+                               placeholder="Enter Last Name"
+                               type="text"
+                               th:field="*{lastName}"/>
+                        <p th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></p>
+                        <label class="form-label" >Email</label>
+                        <input name="email"
+                               class="form-control"
+                               id="email"
+                               placeholder="Enter Email"
+                               type="text"
+                               th:field="*{email}"/>
+                        <p th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></p>
+                        <label class="form-label" >Password</label>
+                        <input name="password"
+                               class="form-control"
+                               id="password"
+                               placeholder="Enter Password"
+                               type="password"
+                               th:field="*{password}"/>
+                        <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>
+                    </div>
+                    <div class="form-group mb-3">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                        <span> Already Registered ?
+                        <a th:href="@{/login}">Login Here</a></span>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<br/>
+<br/>
+<br/>
+<div th:replace="blog/footer    :: footer"></div>
+</body>
+</html>

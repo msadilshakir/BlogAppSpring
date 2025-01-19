@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<div th:replace="blog/header :: header"></div>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark"  style="background-color: #0066a4 !important;">
+    <div class="container-fluid">
+
+
+        <!-- <img th:src="@{/images/logo.jpg}" alt="Logo" width="200" height="auto"> -->
+        <section><a class="navbar-brand" href="/">THALES BLOG APPLICATION</a></section>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+                <li class="nav-item ">
+                    <a class="nav-link active " aria-current="page" th:href=@{/}>All Posts</a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link active " aria-current="page" th:href=@{/admin/posts}>Admin Panel</a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link active " aria-current="page" th:href=@{/logout}>Logout</a>
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<br/>
+
+<div class="container mt-9">
+    <div class="row">
+        <div class="col-sm-9">
+            <h2 th:text="${post.title}"></h2>
+            <hr/>
+            <h4 th:text="${post.shortDescription}"></h4>
+            <hr/>
+            <div th:utext="${post.content}">
+
+            </div>
+            <hr/>
+            <div class="card">
+                <div class="card-header">
+                    <h3> Comment :</h3>
+                </div>
+                <div class="card-body">
+                    <div th:each="comment: ${post.comments}">
+                        <div >
+                            <p><b>Name : </b> <strong th:text="${comment.name}"></strong></p>
+                            <p><b>Date : </b> <strong th:text="${#temporals.format(comment.createdOn, 'dd MMM yyy')}"></strong></p>
+                            <p th:text="${comment.content}"></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>Leave a comment</h2>
+                </div>
+                <div class="card-body">
+                    <form
+                    role="form"
+                    method="post"
+                    th:action="@{/{postUrl}/comments(postUrl=${post.url})}"
+                    th:object="${comment}">
+                        <div class="row">
+                            <div class="col-md-5 md-3">
+                                <input
+                                        class="form-control"
+                                        id="name"
+                                        name="name"
+                                        placeholder="Enter Name"
+                                        th:field="*{name}"
+                                        type="text"
+                                >
+                                <p
+                                        th:if="${#fields.hasErrors('name')}"
+                                        th:errors="*{name}"
+                                        class="text-danger">
+                                </p>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-5 md-3">
+                                <input
+                                        class="form-control"
+                                        id="email"
+                                        name="email"
+                                        placeholder="Enter Email"
+                                        th:field="*{email}"
+                                        type="text"
+                                >
+                                <p
+                                        th:if="${#fields.hasErrors('email')}"
+                                        th:errors="*{email}"
+                                        class="text-danger">
+                                </p>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-md-5 md-3">
+                                <textarea
+                                        class="form-control"
+                                        id="content"
+                                        name="content"
+                                        placeholder="Enter Comment"
+                                        rows="4"
+                                        th:field="*{content}"
+                                        type="text"
+                                ></textarea>
+                                <p
+                                        th:if="${#fields.hasErrors('content')}"
+                                        th:errors="*{content}"
+                                        class="text-danger">
+                                </p>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="form-group col-md-5">
+                                <button
+                                        type="submit"
+                                        class="btn btn-primary"
+                                >   Submit
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-3">
+            <div th:replace="blog/search :: search"></div>
+        </div>
+    </div>
+    <br/><br/><br/>
+</div>
+
+
+<div th:replace="blog/footer    :: footer"></div>
+</body>
+</html>
